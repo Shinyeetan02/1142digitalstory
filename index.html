@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASMR</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="scene1-container">
+        <video id="scene1" src="videos/scene1.mp4" preload="auto"></video>
+        <button id="playBtn">進入故事</button>
+    </div>
+    <div class="scene2-container">
+        <video id="scene2" src="videos/scene2.mp4" preload="auto"></video>
+    </div>
+    <div class="scene3-container">
+        <video id="scene3" src="videos/scene3.mp4" preload="auto"></video>
+    </div>
+
+    <div class="captions">
+        <p id="caption1">一隻綿羊...</p>
+        <p id="caption2">兩隻綿羊...</p>
+        <p id="caption3">三隻綿羊...</p>
+        <p id="caption4">這裡怎麼會有個大洞口？</p>
+    </div>
+
+    <!-- 载入 GSAP 库 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="gsap.js"></script>
+</body>
+</html>
