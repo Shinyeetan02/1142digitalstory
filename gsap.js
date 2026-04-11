@@ -11,6 +11,8 @@ const scene3 = document.getElementById('scene3')
 const playBtn = document.getElementById('playBtn')
 // 時間軸建立，影片一開始先paused
 const tl = gsap.timeline({ paused: true })
+// 按鈕2：開啟手機
+const phoneBtn = document.getElementById('phoneBtn')
 
 // 按鈕1：點擊進入故事後按鈕opacity調整為0
 playBtn.addEventListener('click', () => {
@@ -81,6 +83,11 @@ function setupScrollTriggers() {
         }
     })
 }
+// scene3 影片結束後切換至 scene3-img 並顯示 phoneBtn
+scene3.addEventListener('ended', () => {
+    gsap.to('#scene3-img', { opacity: 1, duration: 0.5, pointerEvents: 'auto' })
+    gsap.to('#phoneBtn', { opacity: 1, duration: 0.5, delay: 0.3, pointerEvents: 'auto' })
+})
 
 // Scene3 顯示：scene2 fade out 與 scene3 fade in 同時進行（crossfade，避免 scene1 露出）
 function showScene3() {
@@ -102,3 +109,7 @@ function showScene2() {
         onStart: () => { scene2.currentTime = scene2.duration } // 停在最後一幀
     })
 }
+
+phoneBtn.addEventListener('click', () => {
+    gsap.to('#phone1-img', { opacity: 1, duration: 0.5, pointerEvents: 'auto' })
+})
