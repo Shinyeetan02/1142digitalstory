@@ -118,13 +118,34 @@ body {
     z-index: 100;
 }
 
-#phone1-img, #phone2-img {
-    position: absolute;
+.scene4-container {
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    height: 100vh;
     opacity: 0;
     pointer-events: none;
+    z-index: 30;
+}
+
+#scene4 {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.scene3-captions p {
+    position: fixed;
+    bottom: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    font-size: 48px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-shadow: 0 2px 8px rgba(42, 42, 42, 0.3);
+    pointer-events: none;
+    white-space: nowrap;
+    opacity: 0;
+    z-index: 25;
 }

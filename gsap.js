@@ -7,6 +7,8 @@ const scene1 = document.getElementById('scene1')
 const scene2 = document.getElementById('scene2')
 // 第三幀
 const scene3 = document.getElementById('scene3')
+// 第四幀
+const scene4 = document.getElementById('scene4')
 // 按鈕1：進入故事
 const playBtn = document.getElementById('playBtn')
 // 時間軸建立，影片一開始先paused
@@ -71,24 +73,7 @@ function setupScrollTriggers() {
             showScene2()
         }
     })
-    // Scene3 滾動
-    ScrollTrigger.create({
-        trigger: document.body,
-        start: '75% top',
-        end: '100% top',
-        onUpdate: (self) => {
-            if (window._scene3Active) {
-                scene3.currentTime = self.progress * scene3.duration
-            }
-        }
-    })
 }
-// scene3 影片結束後切換至 scene3-img 並顯示 phoneBtn
-scene3.addEventListener('ended', () => {
-    gsap.to('#scene3-img', { opacity: 1, duration: 0.5, pointerEvents: 'auto' })
-    gsap.to('#phoneBtn', { opacity: 1, duration: 0.5, delay: 0.3, pointerEvents: 'auto' })
-})
-
 // Scene3 顯示：scene2 fade out 與 scene3 fade in 同時進行（crossfade，避免 scene1 露出）
 function showScene3() {
     scene3.currentTime = 0
@@ -96,11 +81,38 @@ function showScene3() {
 
     gsap.to('.scene2-container', { opacity: 0, duration: 0.6 })
     gsap.to('.scene3-container', { opacity: 1, duration: 0.6 })
+
+    // scene3 播完後鎖定頁面捲動，避免繼續往下滾
+    scene3.addEventListener('ended', onScene3Ended)
+}
+
+function onScene3Ended() {
+    gsap.to('#scene3-img', { opacity: 1, duration: 0.5, pointerEvents: 'auto' })
+    gsap.to('#phoneBtn', { opacity: 1, duration: 0.5, delay: 0.3, pointerEvents: 'auto' })
+    scene3.removeEventListener('ended', onScene3Ended)
+
+    // scene3-img 出現後依序顯示三段字幕
+    // caption5：出現後停留 0.5 秒再消失
+    // caption6：接著出現，停留 0.5 秒再消失
+    // caption7：出現後持續停留，直到 phoneBtn 被點擊
+    const captionTl = gsap.timeline({ delay: 0.6 })
+    captionTl
+        .to('#caption5', { opacity: 1, duration: 0.6 })
+        .to('#caption5', { opacity: 0, duration: 0.4, delay: 0.5 })
+        .to('#caption6', { opacity: 1, duration: 0.6 })
+        .to('#caption6', { opacity: 0, duration: 0.4, delay: 0.5 })
+        .to('#caption7', { opacity: 1, duration: 0.4 })
 }
 
 // Scene2 回復：scene3 fade out 與 scene2 fade in 同時進行（crossfade，避免 scene1 露出）
 function showScene2() {
     scene3.pause()
+    scene3.removeEventListener('ended', onScene3Ended)
+
+    // 重置 scene3-img 與 phoneBtn
+    gsap.to('#scene3-img', { opacity: 0, duration: 0.3, pointerEvents: 'none' })
+    gsap.to('#phoneBtn', { opacity: 0, duration: 0.3, pointerEvents: 'none' })
+    gsap.to(['#caption5', '#caption6', '#caption7'], { opacity: 0, duration: 0.3 })
 
     gsap.to('.scene3-container', { opacity: 0, duration: 0.6 })
     gsap.to('.scene2-container', {
@@ -111,5 +123,10 @@ function showScene2() {
 }
 
 phoneBtn.addEventListener('click', () => {
-    gsap.to('#phone1-img', { opacity: 1, duration: 0.5, pointerEvents: 'auto' })
+    // 隱藏 caption7
+    gsap.to('#caption7', { opacity: 0, duration: 0.3 })
+
+    scene4.currentTime = 0        
+    gsap.to('.scene4-container', { opacity: 1, duration: 0.6, pointerEvents: 'auto' })
+    scene4.play()
 })
