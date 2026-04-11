@@ -77,13 +77,19 @@ function setupScrollTriggers() {
 // Scene3 顯示：scene2 fade out 與 scene3 fade in 同時進行（crossfade，避免 scene1 露出）
 function showScene3() {
     scene3.currentTime = 0
-    scene3.play()
+    scene3.addEventListener('ended', onScene3Ended)
 
     gsap.to('.scene2-container', { opacity: 0, duration: 0.6 })
     gsap.to('.scene3-container', { opacity: 1, duration: 0.6 })
 
-    // scene3 播完後鎖定頁面捲動，避免繼續往下滾
-    scene3.addEventListener('ended', onScene3Ended)
+    const playPromise = scene3.play()
+    if (playPromise !== undefined) {
+        playPromise.catch(() => {
+            // play() 被封鎖時，直接略過影片跳到結束畫面
+            scene3.removeEventListener('ended', onScene3Ended)
+            onScene3Ended()
+        })
+    }
 }
 
 function onScene3Ended() {
