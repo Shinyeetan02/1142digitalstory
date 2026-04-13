@@ -18,7 +18,13 @@ const phoneBtn = document.getElementById('phoneBtn')
 
 // 按鈕1：點擊進入故事後按鈕opacity調整為0
 playBtn.addEventListener('click', () => {
-    scene1.play()
+    scene1.load()
+    if (scene1.readyState >= 3) {
+        // HAVE_FUTURE_DATA 以上，可以直接播
+        tryPlay()
+    } else {
+        scene1.addEventListener('canplay', tryPlay, { once: true })
+    }
     gsap.to(playBtn, { opacity: 0, duration: 0.3, pointerEvents: 'none' })
 })
 
