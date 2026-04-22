@@ -38,11 +38,40 @@ scene1.addEventListener('timeupdate', () => {
 // scene1 結束
 scene1.addEventListener('ended', () => {
     gsap.to('.scene2-container', { opacity: 1, duration: 0.8 })
-
+ 
+    // hintScrolling-img：scene2 出現後淡入，同時開始 y 軸來回浮動，使用者開始 scroll 後淡出並停止
+    gsap.to('#hintScrolling-img', {
+        opacity: 1,
+        duration: 0.8,
+        delay: 0.8,
+        onComplete: () => {
+            window._hintScrollAnim = gsap.to('#hintScrolling-img', {
+                y: -12,
+                duration: 0.9,
+                ease: 'sine.inOut',
+                repeat: -1,
+                yoyo: true
+            })
+        }
+    })
+ 
+    gsap.to('#hintScrolling', { opacity: 1, duration: 0.8, delay: 0.8 })
+ 
+    const hideHintOnScroll = () => {
+        if (window._hintScrollAnim) {
+            window._hintScrollAnim.kill()
+            window._hintScrollAnim = null
+        }
+        gsap.to('#hintScrolling-img', { opacity: 0, y: 0, duration: 0.4 })
+        gsap.to('#hintScrolling', { opacity: 0, duration: 0.4 })
+        window.removeEventListener('scroll', hideHintOnScroll)
+    }
+    window.addEventListener('scroll', hideHintOnScroll, { passive: true })
+ 
     // 撐開頁面讓 scroll 有空間
     document.body.style.height = '600vh'
     document.body.style.overflow = 'scroll'
-
+ 
     scene2.addEventListener('loadedmetadata', setupScrollTriggers)
     if (scene2.readyState >= 1) setupScrollTriggers()
 })
@@ -108,6 +137,17 @@ function onScene3Ended() {
         .to('#caption6', { opacity: 1, duration: 0.6 })
         .to('#caption6', { opacity: 0, duration: 0.4, delay: 0.5 })
         .to('#caption7', { opacity: 1, duration: 0.4 })
+        .to('#hintClick-img', { opacity: 1, duration: 0.5 })
+        .call(() => {
+            // caption7 出現後，hintClick-img 開始循環閃爍
+            window._hintClickAnim = gsap.to('#hintClick-img', {
+                opacity: 0,
+                duration: 0.7,
+                ease: 'power1.inOut',
+                repeat: -1,
+                yoyo: true
+            })
+        })
 }
 
 // Scene2 回復：scene3 fade out 與 scene2 fade in 同時進行（crossfade，避免 scene1 露出）
@@ -131,7 +171,14 @@ function showScene2() {
 phoneBtn.addEventListener('click', () => {
     // 隱藏 caption7
     gsap.to('#caption7', { opacity: 0, duration: 0.3 })
-
+ 
+    // 停止 hintClick-img 閃爍並淡出
+    if (window._hintClickAnim) {
+        window._hintClickAnim.kill()
+        window._hintClickAnim = null
+    }
+    gsap.to('#hintClick-img', { opacity: 0, duration: 0.3 })
+ 
     scene4.currentTime = 0        
     gsap.to('.scene4-container', { opacity: 1, duration: 0.6, pointerEvents: 'auto' })
     scene4.play()
