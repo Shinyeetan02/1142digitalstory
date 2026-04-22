@@ -9,6 +9,8 @@ const scene2 = document.getElementById('scene2')
 const scene3 = document.getElementById('scene3')
 // 第四幀
 const scene4 = document.getElementById('scene4')
+// 第五幀
+const scene5 = document.getElementById('scene5')
 // 按鈕1：進入故事
 const playBtn = document.getElementById('playBtn')
 // 時間軸建立，影片一開始先paused
@@ -179,7 +181,20 @@ phoneBtn.addEventListener('click', () => {
     }
     gsap.to('#hintClick-img', { opacity: 0, duration: 0.3 })
  
-    scene4.currentTime = 0        
+    scene4.currentTime = 0
+    // 確保 scene4 -> scene5 轉場時，其他 scenes 不會透出
+    gsap.to('.scene1-container', { opacity: 0, duration: 0.3 })
+    gsap.to('.scene2-container', { opacity: 0, duration: 0.3 })
+    gsap.to('.scene3-container', { opacity: 0, duration: 0.3 })
     gsap.to('.scene4-container', { opacity: 1, duration: 0.6, pointerEvents: 'auto' })
     scene4.play()
+
+    // scene4 結束後接 scene5 循環播放
+    scene4.addEventListener('ended', () => {
+        scene5.loop = true
+        scene5.currentTime = 0
+        gsap.to('.scene4-container', { opacity: 0, duration: 0.6 })
+        gsap.to('.scene5-container', { opacity: 1, duration: 0.6 })
+        scene5.play()
+    }, { once: true })
 })

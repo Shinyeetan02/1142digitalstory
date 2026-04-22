@@ -42,7 +42,7 @@ body {
 
 #hintScrolling-img {
     position: absolute;
-    bottom: 250px;
+    bottom: 200px;
     left: 50%;
     transform: translateX(-50%);
     width: 150px;
@@ -57,7 +57,7 @@ body {
     color: white;
     font-size: 24px;
     font-family: Arial, Helvetica, sans-serif;
-    bottom: 230px;
+    bottom: 180px;
     pointer-events: none;
     white-space: nowrap;
     opacity: 0;
@@ -116,6 +116,21 @@ body {
     object-fit: cover;
 }
 
+.scene3-captions p {
+    position: fixed;
+    bottom: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    font-size: 48px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-shadow: 0 2px 8px rgba(42, 42, 42, 0.3);
+    pointer-events: none;
+    white-space: nowrap;
+    opacity: 0;
+    z-index: 25;
+}
+
 #scene3-img {
     position: absolute;
     top: 0;
@@ -125,6 +140,16 @@ body {
     object-fit: cover;
     opacity: 0;
     pointer-events: none;
+}
+
+#hintClick-img {
+    position: absolute;
+    bottom: 580px;
+    left: 360px;
+    transform: translateX(-50%);
+    width: 120px;
+    height: auto;
+    opacity: 0;
 }
  
 #phoneBtn {
@@ -159,27 +184,19 @@ body {
     object-fit: cover;
 }
 
-#hintClick-img {
-    position: absolute;
-    top: 200px;
-    left: 25%;
-    transform: translateX(-50%);
-    width: 125px;
-    height: auto;
+.scene5-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
     opacity: 0;
+    pointer-events: none;
+    z-index: 35;
 }
 
-.scene3-captions p {
-    position: fixed;
-    bottom: 20%;
-    left: 50%;
-    transform: translateX(-50%);
-    color: white;
-    font-size: 48px;
-    font-family: Arial, Helvetica, sans-serif;
-    text-shadow: 0 2px 8px rgba(42, 42, 42, 0.3);
-    pointer-events: none;
-    white-space: nowrap;
-    opacity: 0;
-    z-index: 25;
+#scene5 {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
