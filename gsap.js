@@ -215,6 +215,9 @@ phoneBtn.addEventListener('click', () => {
                 }
                 gsap.to('#hintClick-img-scene5', { opacity: 0, duration: 0.6 })
                 gsap.to('#hintClick', { opacity: 0, duration: 0.6 })
+
+                // 顯示音樂選擇介面
+                gsap.to('#music-overlay', { opacity: 1, duration: 0.8, delay: 0.4, pointerEvents: 'auto' })
                 return
             }
  
@@ -256,3 +259,21 @@ phoneBtn.addEventListener('click', () => {
 
     // 設定點擊互動提示
 })
+
+// 音樂按鈕：點擊後播放對應音樂，並淡出選擇介面
+const lofi = document.getElementById('lofi')
+const classical = document.getElementById('classical')
+const lofiBtn = document.getElementById('lofiBtn')
+const classicalBtn = document.getElementById('classicalBtn')
+
+function playMusic(audio) {
+    lofi.pause()
+    classical.pause()
+    lofi.currentTime = 0
+    classical.currentTime = 0
+    audio.play()
+    gsap.to('#music-overlay', { opacity: 0, duration: 0.8, pointerEvents: 'none' })
+}
+
+lofiBtn.addEventListener('click', () => playMusic(lofi))
+classicalBtn.addEventListener('click', () => playMusic(classical))
