@@ -266,14 +266,41 @@ const classical = document.getElementById('classical')
 const lofiBtn = document.getElementById('lofiBtn')
 const classicalBtn = document.getElementById('classicalBtn')
 
+// scene6 相關元素
+const scene6Img = document.getElementById('scene6-img')
+const scene6 = document.getElementById('scene6')
+
 function playMusic(audio) {
     lofi.pause()
     classical.pause()
     lofi.currentTime = 0
     classical.currentTime = 0
     audio.play()
+
+    // 立刻將 scene6-container 墊到最上層並設為不透明黑底，
+    // 確保 music-overlay 淡出時 scene5 不會透出
+    gsap.set('.scene6-container', { zIndex: 60, opacity: 1, backgroundColor: '#000', pointerEvents: 'auto' })
+
+    // music-overlay 淡出，同時 scene6-img 延遲淡入
     gsap.to('#music-overlay', { opacity: 0, duration: 0.8, pointerEvents: 'none' })
+    gsap.to('#scene6-img', { opacity: 1, duration: 0.8, delay: 0.4, pointerEvents: 'auto' })
+
+    // scene5 完全被遮住後停止播放，節省資源
+    gsap.delayedCall(0.9, () => {
+        scene5.pause()
+        gsap.set('.scene5-container', { opacity: 0, pointerEvents: 'none' })
+    })
 }
+
+// 點擊 scene6-img 後播放 scene6 影片（crossfade，避免黑色畫面）
+scene6Img.addEventListener('click', () => {
+    scene6.currentTime = 0
+    scene6.play()
+
+    // scene6-img 淡出與 scene6 淡入同時進行
+    gsap.to('#scene6-img', { opacity: 0, duration: 0.8, pointerEvents: 'none' })
+    gsap.to('#scene6', { opacity: 1, duration: 0.8 })
+})
 
 lofiBtn.addEventListener('click', () => playMusic(lofi))
 classicalBtn.addEventListener('click', () => playMusic(classical))
