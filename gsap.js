@@ -115,10 +115,13 @@ function showScene3() {
 
     const playPromise = scene3.play()
     if (playPromise !== undefined) {
-        playPromise.catch(() => {
-            // play() 被封鎖時，直接略過影片跳到結束畫面
-            scene3.removeEventListener('ended', onScene3Ended)
-            onScene3Ended()
+        playPromise.catch((err) => {
+            // 只有在非 AbortError（即真正被瀏覽器政策封鎖）時，才跳到結束畫面
+            if (err.name !== 'AbortError') {
+                scene3.removeEventListener('ended', onScene3Ended)
+                onScene3Ended()
+            }
+        // AbortError 代表播放被中斷（例如快速滑動），忽略即可
         })
     }
 }
@@ -154,8 +157,8 @@ function onScene3Ended() {
 
 // Scene2 回復：scene3 fade out 與 scene2 fade in 同時進行（crossfade，避免 scene1 露出）
 function showScene2() {
-    scene3.pause()
     scene3.removeEventListener('ended', onScene3Ended)
+    scene3.pause()
 
     // 重置 scene3-img 與 phoneBtn
     gsap.to('#scene3-img', { opacity: 0, duration: 0.3, pointerEvents: 'none' })
@@ -266,6 +269,9 @@ const classical = document.getElementById('classical')
 const lofiBtn = document.getElementById('lofiBtn')
 const classicalBtn = document.getElementById('classicalBtn')
 
+lofiBtn.addEventListener('click', () => playMusic(lofi))
+classicalBtn.addEventListener('click', () => playMusic(classical))
+
 // scene6 相關元素
 const scene6Img = document.getElementById('scene6-img')
 const scene6 = document.getElementById('scene6')
@@ -283,7 +289,32 @@ function playMusic(audio) {
 
     // music-overlay 淡出，同時 scene6-img 延遲淡入
     gsap.to('#music-overlay', { opacity: 0, duration: 0.8, pointerEvents: 'none' })
-    gsap.to('#scene6-img', { opacity: 1, duration: 0.8, delay: 0.4, pointerEvents: 'auto' })
+    gsap.to('#scene6-img', {
+        opacity: 1,
+        duration: 0.8,
+        delay: 0.4,
+        pointerEvents: 'auto',
+        onComplete: () => {
+            // scene6-img 淡入完成後，顯示 caption8
+            gsap.to('#caption8', { opacity: 1, duration: 0.6 })
+    
+            // caption8 出現後，hintClick-img-scene6 開始閃爍
+            gsap.to('#hintClick-img-scene6', {
+                opacity: 1,
+                duration: 0.6,
+                delay: 0.3,
+                onComplete: () => {
+                    window._hintClickScene6Anim = gsap.to('#hintClick-img-scene6', {
+                        opacity: 0,
+                        duration: 0.7,
+                        ease: 'power1.inOut',
+                        repeat: -1,
+                        yoyo: true
+                    })
+                }
+            })
+        }
+    })
 
     // scene5 完全被遮住後停止播放，節省資源
     gsap.delayedCall(0.9, () => {
@@ -294,13 +325,17 @@ function playMusic(audio) {
 
 // 點擊 scene6-img 後播放 scene6 影片（crossfade，避免黑色畫面）
 scene6Img.addEventListener('click', () => {
+    // 停止閃爍動畫並淡出提示
+    if (window._hintClickScene6Anim) {
+        window._hintClickScene6Anim.kill()
+        window._hintClickScene6Anim = null
+    }
+    gsap.to('#caption8', { opacity: 0, duration: 0.3 })
+    gsap.to('#hintClick-img-scene6', { opacity: 0, duration: 0.3 })
+
     scene6.currentTime = 0
     scene6.play()
 
-    // scene6-img 淡出與 scene6 淡入同時進行
     gsap.to('#scene6-img', { opacity: 0, duration: 0.8, pointerEvents: 'none' })
     gsap.to('#scene6', { opacity: 1, duration: 0.8 })
 })
-
-lofiBtn.addEventListener('click', () => playMusic(lofi))
-classicalBtn.addEventListener('click', () => playMusic(classical))
