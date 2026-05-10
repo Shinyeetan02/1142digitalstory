@@ -22,6 +22,7 @@ const phoneBtn = document.getElementById('phoneBtn')
 playBtn.addEventListener('click', () => {
     scene1.play()
     gsap.to(playBtn, { opacity: 0, duration: 0.3, pointerEvents: 'none' })
+    gsap.to('.title', { opacity: 0, duration: 0.3 })
 })
 
 tl.to("#caption1", { opacity: 1, duration: 1 }, 0.01)

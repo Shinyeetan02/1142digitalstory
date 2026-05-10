@@ -23,6 +23,20 @@ body {
     object-fit: cover; 
 }
 
+.title {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -60%);
+    color: white;
+    font-size: 100px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-shadow: 0 2px 16px rgba(0, 0, 0, 0.3);
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 5;
+}
+
 .scene2-container {
     position: fixed;
     top: 0;

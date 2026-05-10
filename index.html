@@ -11,6 +11,7 @@
     <!-- main -->
     <div class="scene1-container">
         <video id="scene1" src="videos/scene1.mp4" preload="auto" muted playsinline></video>
+        <div class="title">失眠 不焦慮</div>
         <button id="playBtn">進入故事</button>
     </div>
     <div class="scene2-container">
@@ -79,5 +80,39 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="gsap.js"></script>
+
+    <!-- 手機尺寸提示 -->
+    <div id="mobile-notice" style="
+        display: none;
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: #fff;
+        color: #222222;
+        font-size: 20px;
+        font-family: Arial, Helvetica, sans-serif;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        padding: 40px;
+        box-sizing: border-box;
+        z-index: 9999;
+        line-height: 1.8;
+    ">
+        抱歉!本專案尚未進行 RWD 設計<br>請使用電腦進行體驗
+    </div>
+    <script>
+        function checkMobile() {
+            const notice = document.getElementById('mobile-notice')
+            if (window.innerWidth < 768) {
+                notice.style.display = 'flex'
+                document.body.style.overflow = 'hidden'
+            } else {
+                notice.style.display = 'none'
+            }
+        }
+        checkMobile()
+        window.addEventListener('resize', checkMobile)
+    </script>
 </body>
 </html>
