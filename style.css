@@ -358,3 +358,87 @@ body {
     z-index: 60;
     pointer-events: none;
 }
+
+/* ── Scene 7 ── */
+.scene7-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 65;
+}
+
+#scene7 {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ── Scene 8 ── */
+.scene8-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 70;
+}
+
+#scene8 {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ── Scene 9 ── */
+.scene9-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 75;
+}
+
+#scene9 {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* scene9 結尾字幕 */
+.scene9-captions p {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 48px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-shadow: 0 2px 8px rgba(42, 42, 42, 0.3);
+    pointer-events: none;
+    text-align: center;
+    line-height: 1.8;
+    white-space: nowrap;
+    opacity: 0;
+    z-index: 80;
+}
+
+#hintClick-img-scene9 {
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 180px;
+    height: auto;
+    opacity: 0;
+    z-index: 80;
+    pointer-events: none;
+}
