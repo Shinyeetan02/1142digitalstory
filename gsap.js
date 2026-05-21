@@ -138,7 +138,6 @@ function onScene3Ended() {
     // scene3 結束，停止 scene2 背景音效
     const scene2bgm = document.getElementById('scene2bgm')
     scene2bgm.pause()
-    scene2bgm.currentTime = 0
 
     gsap.to('#scene3-img', { opacity: 1, duration: 0.5, pointerEvents: 'auto' })
     gsap.to('#phoneBtn', { opacity: 1, duration: 0.5, delay: 0.3, pointerEvents: 'auto' })
@@ -235,8 +234,18 @@ phoneBtn.addEventListener('click', () => {
                 gsap.to('#hintClick-img-scene5', { opacity: 0, duration: 0.6 })
                 gsap.to('#hintClick', { opacity: 0, duration: 0.6 })
 
-                // 顯示音樂選擇介面
-                gsap.to('#music-overlay', { opacity: 1, duration: 0.8, delay: 0.4, pointerEvents: 'auto' })
+                // 顯示 relaxOptions 選擇介面
+                gsap.to('#relaxOptions', { opacity: 1, duration: 0.8, delay: 0.4, pointerEvents: 'auto' })
+
+                // 點擊 #tea 或 #oil 後切換到 music-overlay
+                function goToMusic() {
+                    gsap.to('#relaxOptions', { opacity: 0, duration: 0.5, pointerEvents: 'none' })
+                    gsap.to('#music-overlay', { opacity: 1, duration: 0.8, delay: 0.3, pointerEvents: 'auto' })
+                    document.getElementById('tea').removeEventListener('click', goToMusic)
+                    document.getElementById('oil').removeEventListener('click', goToMusic)
+                }
+                document.getElementById('tea').addEventListener('click', goToMusic)
+                document.getElementById('oil').addEventListener('click', goToMusic)
                 return
             }
  
@@ -262,7 +271,7 @@ phoneBtn.addEventListener('click', () => {
             if (index === 5) {
                 gsap.set('#hintClick-img-scene5', { top: '26%', left: '65%' })
             } else {
-                gsap.set('#hintClick-img-scene5', { top: '30%', left: '60%' })
+                gsap.set('#hintClick-img-scene5', { top: '30%', left: '58%' })
             }
 
             gsap.to('#hintClick-img-scene5', {
@@ -325,7 +334,7 @@ function playMusic(audio) {
         delay: 0.4,
         pointerEvents: 'auto',
         onComplete: () => {
-            // scene6-img 淡入完成後，hintClick-img-scene6 開始閃爍
+            // scene6-img 淡入完成後，hintClick-img-scene6 與 caption7.5 同時淡入，hint 開始閃爍
             gsap.to('#hintClick-img-scene6', {
                 opacity: 1,
                 duration: 0.6,
@@ -340,6 +349,7 @@ function playMusic(audio) {
                     })
                 }
             })
+            gsap.to('#caption7\\.5', { opacity: 1, duration: 0.6, delay: 0.3 })
         }
     })
 
@@ -358,6 +368,7 @@ scene6Img.addEventListener('click', () => {
         window._hintClickScene6Anim = null
     }
     gsap.to('#hintClick-img-scene6', { opacity: 0, duration: 0.3 })
+    gsap.to('#caption7\\.5', { opacity: 0, duration: 0.3 })
 
     scene6.currentTime = 0
     scene6.play()
@@ -504,6 +515,7 @@ function startScene9Captions() {
         if (index === captions.length - 1) {
             stopHint()
             gsap.to(hintEl, { opacity: 0, duration: 0.5 })
+            gsap.to('#theEnd', { opacity: 1, duration: 1.5, delay: 1.0 })
             return
         }
 

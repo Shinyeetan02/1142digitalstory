@@ -43,7 +43,7 @@
         <audio id="scene2bgm" src="musics/scene2BackgroundSoundEffect.MP3" loop></audio>
         <audio id="scene5bgm" src="musics/scene5BackgroundMusic.MP3" loop></audio>
     </div>
-    <img id="hintClick-img-scene5" src="images/hintClick.png">
+    <img id="hintClick-img-scene5" src="images/mindBubbleHint.png">
 
     <div class="scene6-container">
         <img id="scene6-img" src="images/scene6-img.png">
@@ -60,10 +60,24 @@
         <img id="hintClick-img-scene9" src="images/hintClick.png">
     </div>
 
+    <div id="relaxOptions">
+        <p id="caption_relax1">看來小兔真的很不安！</p>
+        <p id="caption_relax2">要選擇什麼幫助他放鬆呢？</p>
+        <div class="relax-images">
+            <div class="relax-item">
+                <img id="tea" src="images/lavenderTea.png">
+                <span class="relax-label">喝一杯薰衣草花茶</span>
+            </div>
+            <div class="relax-item">
+                <img id="oil" src="images/lavenderEssentialOil.png">
+                <span class="relax-label">嗅一嗅薰衣草精油</span>
+            </div>
+        </div>
+    </div>
+
     <!-- music -->
     <div id="music-overlay">
-        <p id="music-prompt">看來小兔真的很不安！</p>
-        <p id="music-prompt">放個音樂幫助小兔放鬆吧～<br/>選什麼音樂好呢？</p>
+        <p id="music-prompt">再放個音樂協助小兔穩定情緒吧～<br/>選什麼音樂好呢？</p>
         <div id="music-buttons">
             <button id="lofiBtn" class="music-btn">Lofi音樂</button>
             <button id="classicalBtn" class="music-btn">古典樂</button>
@@ -79,18 +93,22 @@
     </div>
     <div class="hints">
         <p id="hintScrolling">請滾動滑鼠</p>
-        <p id="hintClick">安撫小兔的焦慮想法</p>
+        <p id="hintClick">點擊安撫小兔的焦慮想法</p>
     </div>
     <div class="scene3-captions">
         <p id="caption5">看來小兔還是睡不著</p>
         <p id="caption6">好奇現在幾點了</p>
         <p id="caption7">打開手機看看吧～</p>
     </div>
+    <div class="scene6-captions">
+        <p id="caption7.5">點擊撥開雲霧</p>
+    </div>
     <div class="scene9-captions">
         <p id="caption8">你知道嗎<br/>全世界有超過20億人和你一樣，在深夜裡守候黎明</p>
         <p id="caption9">你並不孤單</p>
         <p id="caption10">別去追趕睡眠<br/>接納那個焦慮的、疲憊的、真實的自己</p>
         <p id="caption11">祝你 晚安</p>
+        <img id="theEnd" src="images/The end.png">
     </div>
 
     <!-- 载入 GSAP 库 -->
@@ -137,7 +155,7 @@
 
 <!-- 0519老師建議 -->
 <!-- 
-1）思維泡泡的互動提示可以調整（參考圖片）
+1）思維泡泡的互動提示可以調整（參考圖片）完成
 2）增加多一個助眠的互動效果
-3）最後增加The end的字體
+3）最後增加The end的字體 完成
 -->
