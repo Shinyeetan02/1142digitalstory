@@ -522,7 +522,7 @@ body {
 
 #theEnd {
     position: fixed;
-    top: calc(50% + 80px);
+    top: calc(50% + 60px);
     left: 50%;
     transform: translateX(-50%);
     width: 300px;
